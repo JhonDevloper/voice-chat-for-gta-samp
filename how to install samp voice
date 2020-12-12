@@ -1,0 +1,39 @@
+In order to download the installer, head over to the releases page and choose the desired version of the plugin.
+After downloading, launch the installer and choose the desired language for your installation, afterwards the installer will automatically find your GTA San Andreas folder.
+If the directory is correct, click "OK" and wait for the installation to complete. After the installation is complete, the installer will exit.
+
+Manually
+Head over the releases page and download the archive with the desired client version.
+Extract the archive to your GTA San Andreas folder.
+For developers
+Download from the releases page the desired version of the plugin for your platform.
+Unpack the archive to the root directory of the server.
+Add to the server.cfg server configuration file the line "plugins sampvoice" for Win32 and "plugins sampvoice.so" for Linux x86. (If you have a Pawn.RakNet plugin be sure to place SampVoice after it)
+Usage
+
+Features
+Controlled voice transmission
+Player microphone control
+Binding a voice stream to game objects
+And many more features...
+
+Usage
+To get started using the plugin, read the documentation that comes with the server side. To do this, open the sampvoice.chm file using the Windows reference. (If the documentation does not open, right-click on the documentation file, then Properties -> Unblock -> OK)
+
+To start using the plugin functionality, include the header file:
+
+#include <sampvoice>
+Quick reference
+You need to know that the plugin uses its own type and constant system. Despite the fact that this is just a wrapper over the basic types of Pawn, it helps to navigate the types of the plugin itself and not to confuse pointers.
+
+In order to redirect audio traffic from player A to player B, you need to create an audio stream (for example, a global one, using SvCreateGStream), then attach it to the stream of player A as a speaker (using SvAttachSpeakerToStream), after which attach to player B's stream as a listener (using SvAttachListenerToStream). Done. Now, when player A's microphone is activated (for example, with the SvStartRecord function), his audio traffic will be transmitted and then heard by player B.
+
+Sound streams are pretty handy. They can be visualized using the example of Discord:
+
+A stream is an analogue of a room (or channel).
+Speakers are participants in the room with mute but microphone on.
+Listeners are participants in the room with their microphone mute but mute.
+Players can be both speakers and listeners at the same time. In this case, the player's audio traffic will not be forwarded to him.
+
+Example
+Let's take a look at some of the plugin's features with a practical example. Below we will create a server that will bind all connected players to the global stream, and also create a local stream for each player. Thus, players will be able to communicate through the global (heard equally at any point on the map) and local (heard only near the player) chats.
